@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seni Seviyorum ✨</title>
+    <title>Seni Seviyorum 💞</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy: #0a192f; /* Derin Lacivert */
-            --soft-pink: #fbcfe8; /* Yumuşak Pastel Pembe */
-            --accent-pink: #f472b6; /* Vurgu Pembesi */
+            --navy: #0a192f;
+            --soft-pink: #fbcfe8;
+            --accent-pink: #f472b6;
         }
 
         * {
@@ -30,39 +30,47 @@
             position: relative;
         }
 
-        /* Arka plandaki "Seni Seviyorum" yazıları */
-        body::before {
-            content: "seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum seni seviyorum";
+        /* Arka plandaki sonsuz yazılar */
+        .bg-text-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.05); /* Çok silik beyaz */
-            line-height: 2.5;
-            word-spacing: 15px;
-            pointer-events: none;
-            display: block;
+            z-index: 0;
             overflow: hidden;
+            opacity: 0.07; /* Yazıların silikliği */
+            user-select: none;
+            pointer-events: none;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+        }
+
+        .bg-text-container span {
+            font-size: 11px;
+            padding: 8px;
+            white-space: nowrap;
+            color: white;
         }
 
         .main-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(251, 207, 232, 0.2); /* Pastel pembe çerçeve */
+            background: rgba(10, 25, 47, 0.8);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(251, 207, 232, 0.15);
             padding: 3rem 2rem;
             border-radius: 40px;
             text-align: center;
-            z-index: 1;
+            z-index: 10;
             width: 90%;
-            max-width: 500px;
+            max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         h1 {
             font-weight: 400;
-            margin-bottom: 2.5rem;
-            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 1.6rem;
             color: var(--soft-pink);
             letter-spacing: 1px;
         }
@@ -70,43 +78,42 @@
         .countdown-wrapper {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
         }
 
         .box {
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 70px;
         }
 
         .number {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 600;
-            color: white;
-            line-height: 1;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(244, 114, 182, 0.3);
         }
 
         .label {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             color: var(--accent-pink);
-            margin-top: 8px;
+            margin-top: 5px;
             font-weight: 600;
+            letter-spacing: 1px;
         }
 
-        /* Küçük süsleme */
-        .divider {
-            width: 50px;
-            height: 2px;
-            background: var(--soft-pink);
-            margin: 20px auto;
-            border-radius: 2px;
-            opacity: 0.5;
+        .heart-icon {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            display: block;
+            opacity: 0.6;
         }
     </style>
 </head>
 <body>
+
+    <div class="bg-text-container" id="bgContainer"></div>
 
     <div class="main-card">
         <h1>Geri Sayım başladı 💞</h1>
@@ -122,24 +129,46 @@
             </div>
             <div class="box">
                 <span class="number" id="minutes">00</span>
-                <span class="label">Dak</span>
+                <span class="label">Dakika</span>
             </div>
             <div class="box">
                 <span class="number" id="seconds">00</span>
-                <span class="label">Sn</span>
+                <span class="label">Saniye</span>
             </div>
         </div>
-
-        <div class="divider"></div>
+        <span class="heart-icon">🌸</span>
     </div>
 
     <script>
-        // Hedef: Şu andan itibaren 7 gün
-        const targetDate = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
+        // 1. ARKA PLAN YAZILARI OLUŞTURMA
+        const bgContainer = document.getElementById('bgContainer');
+        const text = "seni seviyorum ";
+        // Ekranı kaplayacak kadar yazı ekle
+        for (let i = 0; i < 400; i++) {
+            const span = document.createElement('span');
+            span.innerText = text;
+            bgContainer.appendChild(span);
+        }
+
+        // 2. KALICI SAYAÇ MANTIĞI
+        // Tarayıcı hafızasında bitiş tarihi var mı bak, yoksa yeni oluştur
+        let endTime = localStorage.getItem('periodCountdownTarget');
+
+        if (!endTime) {
+            // Şu andan 7 gün sonrası (7 gün * 24sa * 60dk * 60sn * 1000ms)
+            endTime = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
+            localStorage.setItem('periodCountdownTarget', endTime);
+        }
 
         function updateTimer() {
             const now = new Date().getTime();
-            const diff = targetDate - now;
+            const diff = endTime - now;
+
+            if (diff <= 0) {
+                document.querySelector(".main-card").innerHTML = "<h1>Zamanı Geldi 🌸</h1><p style='color:white'>Her zaman yanındayım.</p>";
+                clearInterval(interval);
+                return;
+            }
 
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -150,11 +179,6 @@
             document.getElementById("hours").innerText = h.toString().padStart(2, '0');
             document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
             document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
-
-            if (diff < 0) {
-                clearInterval(interval);
-                document.querySelector(".main-card").innerHTML = "<h1>Zamanı geldi 🌸</h1>";
-            }
         }
 
         const interval = setInterval(updateTimer, 1000);
