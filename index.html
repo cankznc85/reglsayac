@@ -103,11 +103,11 @@
             letter-spacing: 1px;
         }
 
-        .heart-icon {
-            font-size: 1.2rem;
-            margin-top: 20px;
+        .daisy-icon {
+            font-size: 1.5rem; /* Papatyayı biraz daha belirgin yaptım */
+            margin-top: 25px;
             display: block;
-            opacity: 0.6;
+            opacity: 0.8; /* Opaklığı artırdım */
         }
     </style>
 </head>
@@ -136,7 +136,7 @@
                 <span class="label">Saniye</span>
             </div>
         </div>
-        <span class="heart-icon">🌸</span>
+        <span class="daisy-icon">🌼</span>
     </div>
 
     <script>
@@ -151,11 +151,9 @@
         }
 
         // 2. KALICI SAYAÇ MANTIĞI
-        // Tarayıcı hafızasında bitiş tarihi var mı bak, yoksa yeni oluştur
         let endTime = localStorage.getItem('periodCountdownTarget');
 
         if (!endTime) {
-            // Şu andan 7 gün sonrası (7 gün * 24sa * 60dk * 60sn * 1000ms)
             endTime = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
             localStorage.setItem('periodCountdownTarget', endTime);
         }
@@ -165,7 +163,7 @@
             const diff = endTime - now;
 
             if (diff <= 0) {
-                document.querySelector(".main-card").innerHTML = "<h1>Zamanı Geldi 🌸</h1><p style='color:white'>Her zaman yanındayım.</p>";
+                document.querySelector(".main-card").innerHTML = "<h1>Zamanı Geldi 🌼</h1><p style='color:white'>Her zaman yanındayım.</p>";
                 clearInterval(interval);
                 return;
             }
