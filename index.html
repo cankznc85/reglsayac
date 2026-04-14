@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seni Bekliyorum ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-blue: #1a2a6c;
+            --soft-pink: #fd79a8;
+            --accent-pink: #e84393;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark-blue), #b21f1f, var(--soft-pink));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 3rem;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            max-width: 90%;
+            width: 450px;
+        }
+
+        h1 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        p {
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1rem;
+            border-radius: 15px;
+            flex: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .time-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--soft-pink);
+        }
+
+        .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .message {
+            margin-top: 2rem;
+            font-style: italic;
+            font-size: 0.9rem;
+            background: var(--accent-pink);
+            padding: 10px;
+            border-radius: 50px;
+            display: inline-block;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .heart {
+            color: var(--soft-pink);
+            animation: beat 1s infinite alternate;
+            display: inline-block;
+        }
+
+        @keyframes beat {
+            to { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Geri Sayım Başladı <span class="heart">❤️</span></h1>
+        <p>Senin için en konforlu dönemi hazırlıyoruz...</p>
+        
+        <div class="countdown" id="timer">
+            <div class="time-box">
+                <span class="number" id="days">00</span>
+                <span class="label">Gün</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="hours">00</span>
+                <span class="label">Saat</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="minutes">00</span>
+                <span class="label">Dakika</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="seconds">00</span>
+                <span class="label">Saniye</span>
+            </div>
+        </div>
+
+        <div class="message">
+            Her zaman yanındayım, unutma! ✨
+        </div>
+    </div>
+
+    <script>
+        // Hedef tarih: Şu andan tam 7 gün sonrası
+        const countdownDate = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.querySelector(".container").innerHTML = "<h1>Özel Günün Başladı ❤️</h1><p>Sıcak çikolatan ve ben hazırız!</p>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
